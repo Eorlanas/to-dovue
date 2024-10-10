@@ -5,7 +5,7 @@
       <button @click="addtask()">Premi per aggiungere task!</button>
       <button @click="logout()">Logout</button>
       <div class="tasklist" ref="taskcontainer">
-        <SingleTask v-for="(task, index) in tasks" :key="index" :deletecallback="deletetask" :editcallback="edittask" :taskprop="task"/>
+        <SingleTask v-for="(task, index) in taskstorender" :key="index" :taskprop="task"/>
       </div>
     </div>
     <div class="loginscreen" v-else>
@@ -17,25 +17,20 @@
 
 //Duplicated tasks delete each other
 //idk how but you gotta load the saved tasks on opening and preferably in app.vue
+
 <script>
-  localStorage.clear()
   export default{
     data(){
       return{
-        tasks: this.gettasks(),
         loginstate: store.state.loginstate
       }
     },
+    computed: {
+      taskstorender(){
+        return this.$store.state.tasklist.filter(task => !task.completed)
+      }
+    },
     methods: { 
-      gettasks(){
-        let taskarray = []
-        store.state.tasklist.forEach(task =>{
-          if(!task.completed){
-              taskarray.push(task)
-            }
-        return taskarray
-        })
-      },
       login(){
         store.state.loggedperson = this.$refs.logininput.value
         store.state.loginstate = true
@@ -50,33 +45,14 @@
         let tasktoinsert = this.$refs.taskinitializer.value
         let loggedperson = store.state.loggedperson
         let newtask = new Task(tasktoinsert, loggedperson)
-        let persontasks = JSON.parse(localStorage.getItem(loggedperson))
-        //this bit needs fixing
-        if (!persontasks){
-          persontasks = [newtask]
+        if (!store.state.personlist.includes(loggedperson)){
+          store.commit("addperson")
         }
-        else{
-          persontasks.push(newtask)
-        }
-        let personlist = JSON.parse(localStorage.getItem("personlist"))
-        if (!personlist){
-          let newliststart = [loggedperson]
-          localStorage.setItem("personlist", JSON.stringify(newliststart))
-        }
-        else if(!personlist.includes(loggedperson)){
-          personlist.push(loggedperson)
-          localStorage.setItem("personlist", personlist)
-        }
-        localStorage.setItem(loggedperson, JSON.stringify(persontasks))
-        this.tasks = this.getalltasks()
+        let taskarr = store.state.tasklist
+        taskarr.push(newtask)
+        store.commit("addtasktomasterlist", taskarr)
         this.$refs.taskinitializer.value = ""
       },
-      deletetask(task){
-        store.state.activetasks.splice(store.state.activetasks.indexOf(task), store.state.activetasks.indexOf(task)+1)
-      },
-      edittask(newtask, oldtask){
-        store.state.activetasks.splice(store.state.activetasks.indexOf(oldtask), store.state.activetasks.indexOf(oldtask)+1, newtask)
-      }
     },
     components:{
       SingleTask

@@ -4,7 +4,7 @@
       <div>{{ taskobject.person }}</div>
       <div>{{ taskobject.task }}</div>
       <button @click="edittoggle">Modifica task</button>
-      <button @click="deletecallback(task)">Elimina task</button>
+      <button @click="deletefunc">Elimina task</button>
       <input @input="archivedtoggle" type="checkbox" value="completed" v-model="taskobject.completed">
       <label for="finished">Completata?</label>
     </div>
@@ -19,6 +19,7 @@
 
 <script>
 
+  import store from "@/store"
   class Task{
     constructor(task, person){
       this.task = task
@@ -38,30 +39,27 @@
     },
 
     methods:{
+      deletefunc(){
+        store.commit("deletetask", this.taskobject)
+      },
       archivedtoggle(){
-        if (!this.archivedstate){
-          this.deletecallback(this.task)
-        }
-        else{
-          this.deletecallback(this.task)
-        }  
+        this.completed = false
       },
       edittoggle(){
         this.editing = !this.editing
       },
       editconfirm(){
-        this.editcallback(this.$refs.editfield.value, this.task)
+        let oldtaskobject = this.taskobject
+        this.taskobject.task = this.$refs.editfield.value
+        store.commit("edittask", this.taskobject, oldtaskobject)
         this.edittoggle()
       }
     },
 
     props: {
-      taskprop: Task,
-      deletecallback: Function,
-      editcallback: Function
+      taskprop: Task
     },
+    }
 
-  }
-  
   export {Task}
 </script>
