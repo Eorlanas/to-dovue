@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex flex-column align-center justify-space-between pa-10 no-gutters" style="height: auto" v-if="loginstate">
       <v-sheet style="border-color: black; border-radius: 1px ; border-style: outset;" class="pt-1">
-        <v-text-field type="text" class="pt-0" persistent-hint hint="Inserisci task qui" ref="taskinitializer" value=""></v-text-field>
+        <v-text-field type="text" class="pt-0" persistent-hint hint="Inserisci task qui" ref="taskinitializer" v-model="tasktext"></v-text-field>
         <v-btn color="grey" @click="addtask()">Premi per aggiungere task!</v-btn >
         <v-btn color="red" @click="logout()">Logout</v-btn >
       </v-sheet>
@@ -25,6 +25,7 @@
     data(){
       return{
         loginstate: store.state.loginstate,
+        tasktext: "",
         logintext: ""
       }
     },
@@ -45,7 +46,7 @@
         this.loginstate = false
       },
       addtask() {
-        let tasktoinsert = this.$refs.taskinitializer.value
+        let tasktoinsert = this.tasktext
         let loggedperson = store.state.loggedperson
         let newtask = new Task(tasktoinsert, loggedperson)
         if (!store.state.personlist.includes(loggedperson)){
