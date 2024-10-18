@@ -13,7 +13,7 @@
       </v-container>
     </div>
     <div v-else class="d-flex flex-column align-center justify-center" style="margin-top:20%;" >
-      <v-text-field class="pa-2" style="border-color: black; border-width: 10px; border-radius: 1px; border-style: outset; width: 300px;" type="text" persistent-hint hint="Chi deve inserire task?" v-model="logintext"></v-text-field>
+      <v-text-field class="pa-2" style="border-color: black; border-width: 10px; border-radius: 1px; border-style: solid; width: 300px;" type="text" persistent-hint hint="Chi deve inserire task?" v-model="logintext"></v-text-field>
       <v-btn :disabled="logintext.length == 0" class="mt-6 red" @click="login()">Login</v-btn>
     </div>
   </div>
