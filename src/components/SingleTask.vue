@@ -2,7 +2,7 @@
   <v-card class="grey px-8 py-3 my-7 mx-8 rounded-lg d-flex justify-center" style="height: 230px; width: 330px;" >
     <v-sheet class="grey d-flex flex-column justify-space-around flex-grow-1">
       <div class="d-flex align-center">
-        <v-avatar color="#40E0D0"><v-icon>mdi-account</v-icon></v-avatar>
+        <v-avatar style="width: 60px; height: 60px;" color="#40E0D0"><v-icon>mdi-account</v-icon></v-avatar>
         <v-card-subtitle class="ml-0" style="font-size: larger; font-weight: 600;">{{ taskobject.person }}</v-card-subtitle>
       </div>
       <v-card-text style="font-size: large; font-weight: 400;" v-if="!editing" class="pa-0 mt-2 mb-4 ml-2">{{ taskobject.task }}</v-card-text>

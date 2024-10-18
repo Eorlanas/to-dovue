@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="d-flex flex-column align-center justify-space-between pa-10 no-gutters" style="height: auto" v-if="loginstate">
-      <v-sheet style="border-color: black; border-radius: 1px ; border-style: outset;" class="pt-1">
-        <v-text-field type="text" class="pt-0" persistent-hint hint="Inserire task qui" ref="taskinitializer" v-model="tasktext"></v-text-field>
+      <v-sheet class="pt-1">
+        <v-text-field style="font-size: large; border-color: black; border-width: 10px; border-radius: 1px; border-style: solid;" type="text" class="pt-0 mb-2" persistent-hint hint="Inserire task qui" ref="taskinitializer" v-model="tasktext"></v-text-field>
         <v-btn :disabled="tasktext.length==0" color="green" @click="addtask()">Premi per aggiungere task!</v-btn >
         <v-btn color="red" @click="logout()">Logout</v-btn >
       </v-sheet>
@@ -55,7 +55,7 @@
         let taskarr = store.state.tasklist
         taskarr.push(newtask)
         store.commit("addtasktomasterlist", taskarr)
-        this.$refs.taskinitializer.value = ""
+        this.tasktext = ""
       },
     },
     components:{
