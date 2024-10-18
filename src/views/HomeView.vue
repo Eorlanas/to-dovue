@@ -2,8 +2,8 @@
   <div>
     <div class="d-flex flex-column align-center justify-space-between pa-10 no-gutters" style="height: auto" v-if="loginstate">
       <v-sheet style="border-color: black; border-radius: 1px ; border-style: outset;" class="pt-1">
-        <v-text-field type="text" class="pt-0" persistent-hint hint="Inserisci task qui" ref="taskinitializer" v-model="tasktext"></v-text-field>
-        <v-btn color="grey" @click="addtask()">Premi per aggiungere task!</v-btn >
+        <v-text-field type="text" class="pt-0" persistent-hint hint="Inserire task qui" ref="taskinitializer" v-model="tasktext"></v-text-field>
+        <v-btn :disabled="tasktext.length==0" color="green" @click="addtask()">Premi per aggiungere task!</v-btn >
         <v-btn color="red" @click="logout()">Logout</v-btn >
       </v-sheet>
       <v-container class="d-flex px-15">
@@ -12,8 +12,8 @@
         </v-row>
       </v-container>
     </div>
-    <div class="d-flex flex-column align-center justify-space-between mt-15" v-else>
-      <v-text-field class="pa-2" style="border-color: black; border-radius: 1px; border-style: outset; width: 300px;" type="text" persistent-hint hint="Chi deve inserire task?" v-model="logintext"></v-text-field>
+    <div v-else class="d-flex flex-column align-center justify-center" style="margin-top:20%;" >
+      <v-text-field class="pa-2" style="border-color: black; border-width: 10px; border-radius: 1px; border-style: outset; width: 300px;" type="text" persistent-hint hint="Chi deve inserire task?" v-model="logintext"></v-text-field>
       <v-btn :disabled="logintext.length == 0" class="mt-6 red" @click="login()">Login</v-btn>
     </div>
   </div>
