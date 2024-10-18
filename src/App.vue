@@ -1,33 +1,13 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Lista</router-link> |
-      <router-link to="/archiviati">Task archiviate</router-link>
-    </nav>
+  <v-app>
+    <v-sheet v-if="$store.state.loggedperson!=''" color="white" class="d-flex justify-space-around py-7 px-15">
+      <router-link to="/">Lista</router-link> 
+      <router-link to="/archiviati">Task archiviate</router-link> 
+      <router-link to="/albo">Albo</router-link>
+    </v-sheet>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

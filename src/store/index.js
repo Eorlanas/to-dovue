@@ -47,7 +47,7 @@ const newstore = new Vuex.Store({
     deletetask(state, task){
       state.tasklist.splice(state.tasklist.indexOf(task), state.tasklist.indexOf(task)+1)
     },
-    edittask(state, newtask, oldtask){
+    edittask(state, {newtask, oldtask}){
       state.tasklist.splice(state.tasklist.indexOf(oldtask), 1, newtask)
     }
   },
@@ -57,14 +57,11 @@ const newstore = new Vuex.Store({
   }
 })
 
-//localStorage.clear()
-
 newstore.commit("loadpersonlist")
 newstore.commit("loadtasks")
 
 
 window.addEventListener("beforeunload", function(){
-  this.event.preventDefault()
   localStorage.setItem("personlist", JSON.stringify(newstore.state.personlist))
   newstore.state.personlist.forEach((person)=>{
     let persontasks = []

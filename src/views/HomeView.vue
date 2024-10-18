@@ -1,28 +1,31 @@
 <template>
   <div>
-    <div class="todolistadder" v-if="loginstate">
-      <input type="text" placeholder="Inserisci task qui" ref="taskinitializer">
-      <button @click="addtask()">Premi per aggiungere task!</button>
-      <button @click="logout()">Logout</button>
-      <div class="tasklist" ref="taskcontainer">
-        <SingleTask v-for="(task, index) in taskstorender" :key="index" :taskprop="task"/>
-      </div>
+    <div class="d-flex flex-column align-center justify-space-between pa-10 no-gutters" style="height: auto" v-if="loginstate">
+      <v-sheet style="border-color: black; border-radius: 1px ; border-style: outset;" class="pt-1">
+        <v-text-field type="text" class="pt-0" persistent-hint hint="Inserisci task qui" ref="taskinitializer" value=""></v-text-field>
+        <v-btn color="grey" @click="addtask()">Premi per aggiungere task!</v-btn >
+        <v-btn color="red" @click="logout()">Logout</v-btn >
+      </v-sheet>
+      <v-container class="d-flex px-15">
+        <v-row class="d-flex justify-center align-start" ref="taskcontainer">
+            <SingleTask v-for="(task) in taskstorender" :key="task.id" :taskprop="task"/>
+        </v-row>
+      </v-container>
     </div>
-    <div class="loginscreen" v-else>
-      <input type="text" placeholder="Chi deve inserire task?" ref="logininput">
-      <button @click="login()">Login</button>
+    <div class="d-flex flex-column align-center justify-space-between mt-15" v-else>
+      <v-text-field class="pa-2" style="border-color: black; border-radius: 1px; border-style: outset; width: 300px;" type="text" persistent-hint hint="Chi deve inserire task?" v-model="logintext"></v-text-field>
+      <v-btn :disabled="logintext.length == 0" class="mt-6 red" @click="login()">Login</v-btn>
     </div>
   </div>
 </template>
 
-//Duplicated tasks delete each other
-//idk how but you gotta load the saved tasks on opening and preferably in app.vue
 
 <script>
   export default{
     data(){
       return{
-        loginstate: store.state.loginstate
+        loginstate: store.state.loginstate,
+        logintext: ""
       }
     },
     computed: {
@@ -32,7 +35,7 @@
     },
     methods: { 
       login(){
-        store.state.loggedperson = this.$refs.logininput.value
+        store.state.loggedperson = this.logintext
         store.state.loginstate = true
         this.loginstate = true
       },
